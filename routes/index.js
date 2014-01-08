@@ -4,5 +4,6 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', {title: "FY11", pretty: true});
+	console.log('se: ' + JSON.stringify(req.session));
+	res.render('index', {title: "FY11", pretty: true});
 };
