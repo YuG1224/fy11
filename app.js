@@ -13,6 +13,8 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 
 var app = express();
 
+var url = '';
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +26,6 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
-app.use(express.bodyParser());
 app.use(express.session({secret: 'fy11'}));
 // passportのinitializeとsessionを使う
 app.use(passport.initialize());
@@ -32,14 +33,20 @@ app.use(passport.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+if('development' == app.get('env')){
+	// development only
+	app.use(express.errorHandler());
+	url = 'http://fy11-dev.cloudapp.net';
+}
+if('production' == app.get('env')){
+	// production only
+	url = 'http://fy11.cloudapp.net';
 }
 
 app.get('/', routes.index);
 
 http.createServer(app).listen(app.get('port'), function(){
+	console.log('NODE_ENV: ' + app.get('env'));
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
@@ -59,7 +66,7 @@ passport.use(
 	new FacebookStrategy({
 		clientID: FACEBOOK_APP_ID,
 		clientSecret: FACEBOOK_APP_SECRET,
-		callbackURL: "/auth/facebook/callback"
+		callbackURL: url + '/auth/facebook/callback'
 	},function(accessToken, refreshToken, profile, done){
 		console.log('at: ' + JSON.stringify(accessToken));
 		console.log('rt: ' + JSON.stringify(refreshToken));
