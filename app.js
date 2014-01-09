@@ -23,8 +23,9 @@ app.use(express.favicon());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
+app.use(express.cookieParser());
+app.use(express.bodyParser());
+app.use(express.session({secret: 'fy11'}));
 // passportのinitializeとsessionを使う
 app.use(passport.initialize());
 app.use(passport.session());
@@ -58,7 +59,7 @@ passport.use(
 	new FacebookStrategy({
 		clientID: FACEBOOK_APP_ID,
 		clientSecret: FACEBOOK_APP_SECRET,
-		callbackURL: "/login/facebook/callback"
+		callbackURL: "/auth/facebook/callback"
 	},function(accessToken, refreshToken, profile, done){
 		console.log('at: ' + JSON.stringify(accessToken));
 		console.log('rt: ' + JSON.stringify(refreshToken));
@@ -69,6 +70,13 @@ passport.use(
 	})
 );
 
-app.get('/login/facebook', passport.authenticate('facebook'), function(req, res){});
+app.get('/auth/facebook', passport.authenticate('facebook'));
 
-app.get('/login/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/login/facebook'}), function(req, res){res.redirect('/');});
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/'}), function(req, res){
+	res.redirect('/');
+});
+
+app.get('/logout', function(req, res){
+	req.logout();
+	res.redirect('/');
+});
