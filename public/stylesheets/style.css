@@ -14,12 +14,11 @@ body {
   float: left;
   text-align: center;
   color: #fff;
-  background-image: url("/images/wangan.png");
+  background-image: url("/images/wangan.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fiexd;
-  z-index: -100;
 }
 #cover .text {
   position: relative;
