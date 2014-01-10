@@ -1,16 +1,17 @@
 {
-	"name": "application-name",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "NODE_ENV=production forever -w start app.js",
-		"test": "NODE_ENV=development forever -w  start app.js"
-	},
-	"dependencies": {
-		"express": "3.4.7",
-		"jade": "*",
-		"stylus": "~0.41.3",
-		"passport": "~0.1.18",
-		"passport-facebook": "~1.0.2"
-	}
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "NODE_ENV=production forever -w start app.js",
+    "test": "NODE_ENV=development forever -w  start app.js"
+  },
+  "dependencies": {
+    "express": "3.4.7",
+    "jade": "*",
+    "stylus": "~0.41.3",
+    "passport": "~0.1.18",
+    "passport-facebook": "~1.0.2",
+    "request": "~2.31.0"
+  }
 }

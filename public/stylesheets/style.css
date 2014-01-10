@@ -19,7 +19,6 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fiexd;
-  z-index: -100;
 }
 #cover .text {
   position: relative;

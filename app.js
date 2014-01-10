@@ -5,6 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
+var pass = require('./routes/pass');
 var http = require('http');
 var path = require('path');
 // OAuthの為にpassportを読み込む
@@ -44,6 +45,7 @@ if('production' == app.get('env')){
 }
 
 app.get('/', routes.index);
+app.get('/pass', pass.get);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('NODE_ENV: ' + app.get('env'));
@@ -68,9 +70,9 @@ passport.use(
 		clientSecret: FACEBOOK_APP_SECRET,
 		callbackURL: url + '/auth/facebook/callback'
 	},function(accessToken, refreshToken, profile, done){
-		console.log('at: ' + JSON.stringify(accessToken));
-		console.log('rt: ' + JSON.stringify(refreshToken));
-		console.log('pf: ' + JSON.stringify(profile));
+		// console.log('at: ' + JSON.stringify(accessToken));
+		// console.log('rt: ' + JSON.stringify(refreshToken));
+		// console.log('pf: ' + JSON.stringify(profile));
 		process.nextTick(function(){
 			done(null ,profile);
 		});
