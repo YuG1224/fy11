@@ -22,7 +22,7 @@ var User = function (host, port, db) {
 User.prototype.register = function (data, callback) {
 	var authorization, saveData;
 	authorization = this.makeHashVal(data.uid);
-	// TODO add user name
+	// add user name
 	saveData = {
 		uid : data.uid,
 		authorization : authorization,
@@ -48,12 +48,19 @@ User.prototype.register = function (data, callback) {
  * @public
  */
 User.prototype.addPushToken = function (data, callback) {
-	var query, updateData, options;
+	var query, updateData, options, passData;
 	query = {
 		authorization : data.authorization
 	};
+	passData = {
+		deviceLibraryID: data.deviceLibraryID,
+		passTypeID: data.passTypeID,
+		serialNumber: data.serialNumber,
+		pushToken: data.pushToken,
+		authorization: data.authorization
+	};
 	updateData = {
-		$set : {pushToken : data.pushToken}
+		$set : passData
 	};
 	options = {
 		multi: true
@@ -76,10 +83,9 @@ User.prototype.addPushToken = function (data, callback) {
  * @public
  */
 User.prototype.accept = function (data, callback) {
-	// TODO 受付のkeyは？
 	var query, updateData, options;
 	query = {
-		authorization : data.authorization
+		uid : data.uid
 	};
 	updateData = {
 		$set : {
