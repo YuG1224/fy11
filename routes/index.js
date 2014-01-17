@@ -33,7 +33,6 @@ exports.index = function(req, res){
 						authentication: authentication
 					}
 				}, function(err, response, body){
-					console.log(body);
 					if(body){
 						save = true;
 					}
@@ -45,7 +44,6 @@ exports.index = function(req, res){
 		},
 		function(cb){
 			if(id && name && save == false){
-				console.log(name);
 				request.post({
 					url: 'http://localhost:3000/registerUser',
 					qs: {
@@ -53,7 +51,6 @@ exports.index = function(req, res){
 						name: name
 					}
 				}, function(err, response, body){
-					console.log(body);
 					cb();
 				});
 			}else{

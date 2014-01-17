@@ -11,7 +11,7 @@ var user = new User('localhost', 27017, 'fy11');
  * @public
  */
 exports.register = function(req, res){
-	var userData = req.body;
+	var userData = req.query;
 	user.register(userData, function (err) {
 		if (!err) {
 			res.send(200, 'success!');
@@ -27,7 +27,7 @@ exports.register = function(req, res){
  * @public
  */
 exports.addPushToken = function(req, res){
-	var pbData = req.body;
+	var pbData = req.query;
 	user.addPushToken(pbData, function (err) {
 		if (!err) {
 			res.send(200, 'success!');
