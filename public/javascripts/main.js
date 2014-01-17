@@ -1,4 +1,8 @@
 $(function(){
+	window.onload = function() {
+		setTimeout(scrollTo, 100, 0, 1);
+	};
+
 	var source = $('#template').text();
 	var template = Hogan.compile(source);
 
