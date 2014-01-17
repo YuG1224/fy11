@@ -20,12 +20,12 @@ var User = function (host, port, db) {
  * @public
  */
 User.prototype.register = function (data, callback) {
-	var authorization, saveData;
-	authorization = this.makeHashVal(data.uid);
+	var authentication, saveData;
+	authentication = this.makeHashVal(data.uid);
 	// add user name
 	saveData = {
 		uid : data.uid,
-		authorization : authorization,
+		authentication : authentication,
 		userName : data.name,
 		accept : false,
 		oauth : 'facebook',
@@ -50,14 +50,14 @@ User.prototype.register = function (data, callback) {
 User.prototype.addPushToken = function (data, callback) {
 	var query, updateData, options, passData;
 	query = {
-		authorization : data.authorization
+		authentication : data.authentication
 	};
 	passData = {
 		deviceLibraryID: data.deviceLibraryID,
 		passTypeID: data.passTypeID,
 		serialNumber: data.serialNumber,
 		pushToken: data.pushToken,
-		authorization: data.authorization
+		authentication: data.authentication
 	};
 	updateData = {
 		$set : passData
@@ -115,7 +115,7 @@ User.prototype.accept = function (data, callback) {
  */
 User.prototype.get = function (data, callback) {
 	var query = {
-		authorization : data.authorization
+		authentication : data.authentication
 	};
 	this.mongo.findOne(
 		this.col,
@@ -135,7 +135,7 @@ User.prototype.get = function (data, callback) {
  */
 User.prototype.delete = function (data, callback) {
 	var query = {
-		authorization : data.authorization
+		authentication : data.authentication
 	};
 	this.mongo.remove(
 		this.col,
@@ -153,9 +153,7 @@ User.prototype.delete = function (data, callback) {
  * @private
  */
 User.prototype.makeHashVal = function (data) {
-  var hashval,
-    string = JSON.stringify(data);
- hashval = crypto.createHash('md5').update(string).digest('hex');
+  var hashval = crypto.createHash('md5').update(data).digest('hex');
   return hashval;
 };
 

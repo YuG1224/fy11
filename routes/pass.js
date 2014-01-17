@@ -5,9 +5,10 @@ exports.get = function(req, res){
 	var id = req.session.passport.user.id;
 
 	request.post({
-		url: 'http://createpassbook.cloudapp.net:3000/create',
-		form: {
-			uid: id
+		url: 'http://localhost:3003/create',
+		qs: {
+			uid: id,
+			serialNumber: 'softbankfy11'
 		}
 	}, function(err, response, body){
 		if(err){
@@ -15,7 +16,7 @@ exports.get = function(req, res){
 			res.send(err, 500);
 		}else{
 			console.log(body);
-			res.redirect('http://createpassbook.cloudapp.net:3000/download?uid=' + id);
+			res.redirect('http://fy11-dev.cloudapp.net:3003/download?uid=' + id);
 		}
 	});
 };
