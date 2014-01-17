@@ -27,7 +27,7 @@ exports.register = function(req, res){
  * @public
  */
 exports.addPushToken = function(req, res){
-	var pbData = req.query;
+	var pbData = req.body;
 	user.addPushToken(pbData, function (err) {
 		if (!err) {
 			res.send(200, 'success!');
