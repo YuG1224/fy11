@@ -66,3 +66,13 @@ exports.index = function(req, res){
 		});
 	});
 };
+
+/**
+ * checkin数表示
+ */
+exports.checkin = function(req, res){
+	res.render('checkin', {
+		title: 'checkin',
+		pretty: true
+	});
+};
