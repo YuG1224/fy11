@@ -6,7 +6,7 @@ exports.get = function(req, res){
 
 	request.post({
 		url: 'http://localhost:3003/create',
-		form: {
+		qs: {
 			uid: id,
 			serialNumber: 'softbankfy11'
 		}

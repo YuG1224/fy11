@@ -29,7 +29,7 @@ exports.index = function(req, res){
 				
 				request.get({
 					url: 'http://localhost:3000/getUser',
-					form: {
+					qs: {
 						authentication: authentication
 					}
 				}, function(err, response, body){
@@ -48,7 +48,7 @@ exports.index = function(req, res){
 				console.log(name);
 				request.post({
 					url: 'http://localhost:3000/registerUser',
-					form: {
+					qs: {
 						uid: id,
 						name: name
 					}
