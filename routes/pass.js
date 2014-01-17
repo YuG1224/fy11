@@ -7,7 +7,8 @@ exports.get = function(req, res){
 	request.post({
 		url: 'http://createpassbook.cloudapp.net:3000/create',
 		form: {
-			uid: id
+			uid: id,
+			serialNumber: 'softbankfy11'
 		}
 	}, function(err, response, body){
 		if(err){

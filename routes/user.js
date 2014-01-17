@@ -16,7 +16,7 @@ exports.register = function(req, res){
 		if (!err) {
 			res.send(200, 'success!');
 		} else {
-			res.send(500, code);
+			res.send(500, err);
 		}
 	});
 };
