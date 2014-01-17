@@ -153,9 +153,7 @@ User.prototype.delete = function (data, callback) {
  * @private
  */
 User.prototype.makeHashVal = function (data) {
-  var hashval,
-    string = JSON.stringify(data);
- hashval = crypto.createHash('md5').update(string).digest('hex');
+  var hashval = crypto.createHash('md5').update(data).digest('hex');
   return hashval;
 };
 
