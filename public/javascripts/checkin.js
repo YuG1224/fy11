@@ -22,4 +22,7 @@ $(function(){
 		}
 	});
 	ws.emit('first');
+	$(document).on('click', '#random', function(){
+		ws.emit('random');
+	});
 });
