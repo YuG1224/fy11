@@ -16,6 +16,7 @@
     "passport": "~0.1.18",
     "passport-facebook": "~1.0.2",
     "request": "~2.31.0",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "socket.io": "~0.9.16"
   }
 }

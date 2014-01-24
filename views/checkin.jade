@@ -5,3 +5,26 @@ block head
 
 block content
   include header
+
+  #main.row
+    each val,index in grp
+      .group.col-xs-3(id= 'grp'+index)
+        .thumbnail
+          .captain
+            h4= val
+            .row
+
+              // - each val in data
+              //   .user.col-xs-6
+              //     .thumbnail.media
+              //       .pull-left
+              //         img.img-circle(src='https://graph.facebook.com/' + val.id + '/picture')
+              //       .media-body= val.name
+                  
+            
+block script
+  script(src='/socket.io/socket.io.js')
+  script(src='/javascripts/checkin.js')
+  script(type='text/template')#template
+    include userTmp
+    
