@@ -11,6 +11,7 @@ var async = require('async');
 var User = function (host, port, db) {
 	this.mongo = new MongoWrapper(host, port, db, {});
 	this.col = 'user';
+	this.sockets = [];
 };
 
 /**
@@ -84,6 +85,7 @@ User.prototype.addPushToken = function (data, callback) {
  */
 User.prototype.accept = function (data, callback) {
 	var query, updateData, options;
+	var self = this;
 	query = {
 		uid : data.uid
 	};
@@ -102,7 +104,17 @@ User.prototype.accept = function (data, callback) {
 		updateData,
 		options,
 		function (err) {
-			callback(err);
+			if (!err) {
+				self.mongo.findOne(
+					self.col,
+					query,
+					function (err, data) {
+						callback(err, data);
+					}
+				);
+			} else {
+				callback(err);
+			}
 		}
 	);
 };
@@ -155,6 +167,21 @@ User.prototype.delete = function (data, callback) {
 User.prototype.makeHashVal = function (data) {
   var hashval = crypto.createHash('md5').update(data).digest('hex');
   return hashval;
+};
+
+User.prototype.socket = function (io) {
+	var self = this;
+	io.sockets.on('connection', function (socket) {
+		self.sockets.push(socket);
+	});
+};
+User.prototype.emit = function (data) {
+	var self = this;
+	if (self.sockets.length > 0) {
+		self.sockets.forEach(function (socket) {
+			socket.json.emit('user', data);
+		});
+	}
 };
 
 module.exports = User;
