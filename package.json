@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production forever -w start app.js",
-    "test": "NODE_ENV=development forever -w  start app.js"
+    "start": "NODE_ENV=production pm2 -i max start app.js",
+    "test": "NODE_ENV=development pm2 -i max start app.js"
   },
   "dependencies": {
     "express": "3.4.7",
