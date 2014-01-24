@@ -14,6 +14,11 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 var app = express();
+var server = http.createServer(app);
+
+// // socket.io テスト用
+// var io = require('socket.io');
+// io = io.listen(server);
 
 var url = '';
 
@@ -46,6 +51,7 @@ if('production' == app.get('env')){
 }
 
 app.get('/', routes.index);
+app.get('/checkin', routes.checkin);
 app.get('/pass', pass.get);
 
 
@@ -55,7 +61,7 @@ app.post('/addPushToken', userRoutes.addPushToken);
 app.get('/acceptUser', userRoutes.accept);
 app.delete('/deleteUser', userRoutes.delete);
 
-http.createServer(app).listen(app.get('port'), function(){
+server.listen(app.get('port'), function(){
 	console.log('NODE_ENV: ' + app.get('env'));
 	console.log('Express server listening on port ' + app.get('port'));
 });
@@ -97,3 +103,14 @@ app.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/');
 });
+
+// // socket.io テスト用
+// io.set('log level', 2);
+// var user = io.sockets.on('connection', function (socket) {
+// 	var data = {
+// 		id: '100003201963303',
+// 		name: 'Hideo Ebina'
+// 	};
+// 	user.emit('user', data);
+// });
+

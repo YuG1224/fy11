@@ -66,3 +66,42 @@ exports.index = function(req, res){
 		});
 	});
 };
+
+/**
+ * checkin数表示
+ */
+exports.checkin = function(req, res){
+	var grp = ['ソ','フ','ト','バ','ン','ク','11'];
+	
+	var data = [
+		{
+			id: '100003201963303',
+			name: 'Hideo Ebina'
+		},{
+			id: '100001723754289',
+			name: 'Takahiro Kato'
+		},{
+			id: '100000109598680',
+			name: 'Yuji Yamaguchi'
+		},{
+			id: '100003201963303',
+			name: 'Hideo Ebina'
+		},{
+			id: '100001723754289',
+			name: 'Takahiro Kato'
+		},{
+			id: '100000109598680',
+			name: 'Yuji Yamaguchi'
+		},{
+			id: '100003201963303',
+			name: 'Hideo Ebina'
+		}
+	];
+
+
+	res.render('checkin', {
+		title: 'checkin',
+		grp: grp,
+		pretty: true
+	});
+};
