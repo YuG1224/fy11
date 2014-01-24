@@ -21,4 +21,5 @@ $(function(){
 			$('#grp0 .row').append(template.render(data));
 		}
 	});
+	ws.emit('first');
 });
