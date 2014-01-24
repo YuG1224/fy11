@@ -5,7 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
-var userRoutes = require('./routes/user');
+var UserRoutes = require('./routes/user');
 var pass = require('./routes/pass');
 var http = require('http');
 var path = require('path');
@@ -16,11 +16,14 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var app = express();
 var server = http.createServer(app);
 
-// // socket.io テスト用
-// var io = require('socket.io');
-// io = io.listen(server);
 
 var url = '';
+//socket.io
+var io = require('socket.io');
+io = io.listen(server);
+io.set('log level', 2);
+
+var userRoutes = new UserRoutes(io);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -104,13 +107,4 @@ app.get('/logout', function(req, res){
 	res.redirect('/');
 });
 
-// // socket.io テスト用
-// io.set('log level', 2);
-// var user = io.sockets.on('connection', function (socket) {
-// 	var data = {
-// 		id: '100003201963303',
-// 		name: 'Hideo Ebina'
-// 	};
-// 	user.emit('user', data);
-// });
 
