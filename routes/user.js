@@ -1,7 +1,9 @@
 'use strict'
 
 var User = require('../model/user');
+var Socket = require('../routes/socket');
 var mongo = new User('localhost', 27017, 'fy11');
+var socket = new Socket();
 // TODO websocket serverを初期化
 /*
 var RedisSession = require('connect-redis')(express);
@@ -12,8 +14,7 @@ var redis = new RedisSession({
 	});
 */
 var user = function (io) {
-	mongo.socket(io);
-	this.sockets = [];
+	socket.socket(io);
 };
 
 /**
@@ -65,7 +66,7 @@ user.prototype.accept = function(req, res){
 				id: data.uid,
 				name: data.userName
 			};
-			mongo.emit(data);
+			socket.emitMulti(data);
 			res.send(200, 'success!');
 		} else {
 			res.send(500, err);
@@ -80,7 +81,7 @@ user.prototype.accept = function(req, res){
  */
 user.prototype.get = function(req, res){
 	var data = req.query;
-	mongo.get(data, function (err, data) {
+	mongo.findOne(data, function (err, data) {
 		if (!err) {
 			res.send(200, data);
 		} else {

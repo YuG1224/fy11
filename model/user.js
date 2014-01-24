@@ -120,12 +120,34 @@ User.prototype.accept = function (data, callback) {
 };
 
 /**
- * get user
+ * find user
+ * @param {Objsct}  query  query 
+ * @param {Objsct}  fields  fields to return
+ * @param {Objsct}  options  query options
+ * @param {Objsct}  sort  sort option
+ * @param {Function}  callback  callbackFunction
+ * @public
+ */
+User.prototype.find = function (query, fields, options, sort, callback) {
+	this.mongo.find(
+		this.col,
+		query,
+		fields,
+		options,
+		sort,
+		function (err, data) {
+			callback(err, data);
+		},
+		true
+	);
+};
+/**
+ * findOne user
  * @param {Objsct}  data  user data
  * @param {Function}  callback  callbackFunction
  * @public
  */
-User.prototype.get = function (data, callback) {
+User.prototype.findOne = function (data, callback) {
 	var query = {
 		authentication : data.authentication
 	};
@@ -168,20 +190,4 @@ User.prototype.makeHashVal = function (data) {
   var hashval = crypto.createHash('md5').update(data).digest('hex');
   return hashval;
 };
-
-User.prototype.socket = function (io) {
-	var self = this;
-	io.sockets.on('connection', function (socket) {
-		self.sockets.push(socket);
-	});
-};
-User.prototype.emit = function (data) {
-	var self = this;
-	if (self.sockets.length > 0) {
-		self.sockets.forEach(function (socket) {
-			socket.json.emit('user', data);
-		});
-	}
-};
-
 module.exports = User;
