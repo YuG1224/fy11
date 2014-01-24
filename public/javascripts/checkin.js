@@ -23,6 +23,7 @@ $(function(){
 	});
 	ws.emit('first');
 	$(document).on('click', '#random', function(){
+		$('.group .row').empty();
 		ws.emit('random');
 	});
 });
