@@ -1,8 +1,20 @@
 'use strict'
 
 var User = require('../model/user');
-var user = new User('localhost', 27017, 'fy11');
-
+var mongo = new User('localhost', 27017, 'fy11');
+// TODO websocket serverを初期化
+/*
+var RedisSession = require('connect-redis')(express);
+var redis = new RedisSession({
+		host:'localhost',
+		port: 6379,
+		secret:'secret'
+	});
+*/
+var user = function (io) {
+	mongo.socket(io);
+	this.sockets = [];
+};
 
 /**
  * register user 
@@ -10,9 +22,9 @@ var user = new User('localhost', 27017, 'fy11');
  * @param {Object}  res http response objecs
  * @public
  */
-exports.register = function(req, res){
+user.prototype.register = function(req, res){
 	var userData = req.query;
-	user.register(userData, function (err) {
+	mongo.register(userData, function (err) {
 		if (!err) {
 			res.send(200, 'success!');
 		} else {
@@ -26,9 +38,9 @@ exports.register = function(req, res){
  * @param {Object}  res http response object
  * @public
  */
-exports.addPushToken = function(req, res){
+user.prototype.addPushToken = function(req, res){
 	var pbData = req.body;
-	user.addPushToken(pbData, function (err) {
+	mongo.addPushToken(pbData, function (err) {
 		if (!err) {
 			res.send(200, 'success!');
 		} else {
@@ -43,27 +55,32 @@ exports.addPushToken = function(req, res){
  * @param {Object}  res http response object
  * @public
  */
-exports.accept = function(req, res){
+user.prototype.accept = function(req, res){
 	var data = req.query;
-	user.accept(data, function (err) {
+	mongo.accept(data, function (err, data) {
 		if (!err) {
+			// kick the websocket server (ティザーサイトへのwebsocket依頼)
+			// param user id + user name			
+			var data = {
+				id: data.uid,
+				name: data.userName
+			};
+			mongo.emit(data);
 			res.send(200, 'success!');
-			// TODO kick the websocket server (ティザーサイトへのwebsocket依頼)
 		} else {
 			res.send(500, err);
 		}
 	});
 };
-
 /**
  * get user 
  * @param {Object}  req http request object
  * @param {Object}  res http response object
  * @public
  */
-exports.get = function(req, res){
+user.prototype.get = function(req, res){
 	var data = req.query;
-	user.get(data, function (err, data) {
+	mongo.get(data, function (err, data) {
 		if (!err) {
 			res.send(200, data);
 		} else {
@@ -78,9 +95,9 @@ exports.get = function(req, res){
  * @param {Object}  res http response object
  * @public
  */
-exports.delete = function(req, res){
+user.prototype.delete = function(req, res){
 	var data = req.body;
-	user.delete(data, function (err) {
+	mongo.delete(data, function (err) {
 		if (!err) {
 			res.send(200, 'success!');
 		} else {
@@ -89,3 +106,4 @@ exports.delete = function(req, res){
 	});
 };
 
+module.exports = user;
