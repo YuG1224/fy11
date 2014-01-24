@@ -16,7 +16,7 @@ exports.get = function(req, res){
 			res.send(err, 500);
 		}else{
 			console.log(body);
-			res.redirect('http://fy11-dev.cloudapp.net:3003/download?uid=' + id);
+			res.redirect('http://fy11.cloudapp.net:3003/download?uid=' + id);
 		}
 	});
 };
