@@ -63,8 +63,8 @@ user.prototype.accept = function(req, res){
 			// kick the websocket server (ティザーサイトへのwebsocket依頼)
 			// param user id + user name			
 			var data = {
-				id: data.uid,
-				name: data.userName
+				uid: data.uid,
+				userName: data.userName
 			};
 			socket.emitMulti(data);
 			res.send(200, 'success!');
