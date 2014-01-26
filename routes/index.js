@@ -105,3 +105,17 @@ exports.checkin = function(req, res){
 		pretty: true
 	});
 };
+
+
+/**
+ * arvhive ページ表示
+ */
+exports.archive = function(req, res){
+	var data = ['DSC00624', 'DSC00642', 'DSC00647', 'DSC00652', 'DSC00654', 'DSC00657', 'DSC00662', 'DSC00666', 'DSC00667', 'DSC00674', 'DSC00676', 'DSC00678', 'DSC00681', 'DSC00684', 'DSC00687', 'DSC00690', 'DSC00692', 'DSC00694', 'DSC00697', 'DSC00699', 'DSC00701', 'DSC00708', 'DSC00713', 'DSC00726', 'DSC00733', 'DSC00737', 'DSC00742', 'DSC00752', 'DSC00754', 'DSC00757', 'DSC00759', 'DSC00763', 'DSC00764', 'DSC00766', 'DSC00768', 'DSC00770', 'DSC00776', 'DSC00779', 'DSC00780', 'DSC00782'];
+
+	res.render('archive', {
+		title: 'archive',
+		data: data,
+		pretty: true
+	});
+};

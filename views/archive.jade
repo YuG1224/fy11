@@ -1,0 +1,28 @@
+extends layout
+
+block head
+  link(rel='stylesheet', href='/stylesheets/archive.css')
+
+block content
+  nav#header.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+    .navbar-header
+      a.navbar-brand
+        |ARCHIVE
+
+  #main.row
+    each val in data
+      .group.col-xs-6.col-sm-3.col-md-2
+        .thumbnail
+          img(src='/thumbnail/'+val+'.jpg', data-toggle='modal', data-target='#'+val, data-value=val)
+
+    each val, index in data
+      .modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', id=val)
+        .modal-dialog
+          .modal-content
+            .modal-body
+              img
+              a(href='/archive/'+val+'.jpg', target='_blank')
+                |画像だけ開く
+
+block script
+  script(src='/javascripts/archive.js')
