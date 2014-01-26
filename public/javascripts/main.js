@@ -6,7 +6,7 @@ $(function(){
 	var source = $('#template').text();
 	var template = Hogan.compile(source);
 
-	$('#cover > .text').append(template.render());
+	// $('#cover > .text').append(template.render());
 
 	// $(document).on('click', '#dlPass', function(){
 	// 	var id = this.dataset.id;
