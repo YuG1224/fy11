@@ -55,6 +55,7 @@ if('production' == app.get('env')){
 
 app.get('/', routes.index);
 app.get('/checkin', routes.checkin);
+app.get('/archive', routes.archive);
 app.get('/pass', pass.get);
 
 
